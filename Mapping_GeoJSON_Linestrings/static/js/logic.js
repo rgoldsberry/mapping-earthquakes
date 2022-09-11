@@ -38,7 +38,7 @@ let map = L.map('mapid', {
 });
 
 // accessing the toronto routes data
-let torontoData = "https://raw.githubusercontent.com/rgoldsberry/mapping-earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json"
+let torontoData = "https://raw.githubusercontent.com/rgoldsberry/mapping-earthquakes/main/torontoRoutes.json"
 
 d3.json(torontoData).then(function(data) {
     console.log(data);
