@@ -2,7 +2,7 @@
 console.log("working");
 
 // create the map object using setView
-let map = L.map('mapid').setView([37.5, -122.5], 10);
+let map = L.map('mapid').setView([30, 30], 2);
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
