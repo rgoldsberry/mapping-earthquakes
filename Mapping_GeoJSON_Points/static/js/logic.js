@@ -1,18 +1,32 @@
 // Add console.log to chec kand see if our code is working
 console.log("working");
 
-// create the map object using setView
-let map = L.map('mapid').setView([30, 30], 2);
-
 // We create the tile layer that will be the background of our map.
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
     accessToken: API_KEY
 });
 
-// Then we add our 'graymap' tile layer to the map.
-streets.addTo(map);
+// We create the dark view tile layer that will be an option for our map.
+let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    accessToken: API_KEY
+});
+
+// create a base layer to hold the maps
+let baseMaps = {
+    Street : streets,
+    Dark : dark
+};
+
+// create the map object using setView
+let map = L.map('mapid', {
+    center : [30, 30],
+    zoom : 2,
+    layers : [streets] //this is the default layers shown
+});
 
 // Add GeoJSON data.
 let airportData = "https://raw.githubusercontent.com/rgoldsberry/mapping-earthquakes/main/majorAirports.json"
@@ -27,6 +41,9 @@ d3.json(airportData).then(function(data) {
         }
     }).addTo(map);
 });
+
+//add the layer control
+L.control.layers(baseMaps).addTo(map);
 
 
 
