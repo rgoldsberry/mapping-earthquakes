@@ -2,7 +2,7 @@
 console.log("working");
 
 // create the map object using setView
-let map = L.map('mapid').setView([37.6213, -122.3790], 5);
+let map = L.map('mapid').setView([37.5, -122.5], 10);
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -33,3 +33,20 @@ let sanFranAirport =
             "type":"Point",
             "coordinates":[-122.375,37.61899948120117]}}
 ]};
+
+// Put the GeoJSON data on the map using the pointToLayer function
+// L.geoJSON(sanFranAirport, {
+//     pointToLayer : function(feature, latlng) {
+//         console.log(feature);
+//         return L.marker(latlng)
+//             .bindPopup("<h2>" + feature.properties.name + "</h2> <hr> <h3>" + feature.properties.city + ", " + feature.properties.country + "</h3>");
+//     }
+// }).addTo(map);
+
+// Put the GeoJSON data on the map using the onEachFeature function
+L.geoJSON(sanFranAirport, {
+    onEachFeature : function(feature, layer) {
+        console.log(layer);
+        layer.bindPopup(feature.properties.name);
+    }
+}).addTo(map);
