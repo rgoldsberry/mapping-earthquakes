@@ -34,5 +34,25 @@ let baseMaps = {
 let map = L.map('mapid', {
     center : [44, -80],
     zoom : 4,
-    layers : [streets] //this is the default layers shown
+    layers : [dark] //this is the default layers shown
 });
+
+// accessing the toronto routes data
+let torontoData = "https://raw.githubusercontent.com/rgoldsberry/mapping-earthquakes/Mapping_GeoJSON_Linestrings/torontoRoutes.json"
+
+d3.json(torontoData).then(function(data) {
+    console.log(data);
+
+    L.geoJSON(data, {
+        onEachFeature : function(feature, layer) {
+            layer.bindPopup(`<h3>Airline: ${feature.properties.airline}</h3><hr><h4>Destination: ${feature.properties.dst}`)
+        } ,
+        style : {
+            color : "lightYellow",
+            weight : 2
+        }
+    }).addTo(map);
+})
+
+// setting up layer control
+L.control.layers(baseMaps).addTo(map);
