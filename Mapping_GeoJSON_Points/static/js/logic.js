@@ -15,24 +15,22 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 streets.addTo(map);
 
 // Add GeoJSON data.
-let sanFranAirport =
-{"type":"FeatureCollection","features":[{
-    "type":"Feature",
-    "properties":{
-        "id":"3469",
-        "name":"San Francisco International Airport",
-        "city":"San Francisco",
-        "country":"United States",
-        "faa":"SFO",
-        "icao":"KSFO",
-        "alt":"13",
-        "tz-offset":"-8",
-        "dst":"A",
-        "tz":"America/Los_Angeles"},
-        "geometry":{
-            "type":"Point",
-            "coordinates":[-122.375,37.61899948120117]}}
-]};
+let airportData = "https://raw.githubusercontent.com/rgoldsberry/mapping-earthquakes/main/majorAirports.json"
+
+d3.json(airportData).then(function(data) {
+    // putting the data on a map
+    L.geoJSON(data, {
+        onEachFeature : function(feature, layer) {
+            // console.log(feature.properties);
+            // console.log(layer);
+            layer.bindPopup("<h3> Airport Code: " + feature.properties.faa + "</h3><hr><h4>Airport Name: " + feature.properties.name + "</h4>");
+        }
+    }).addTo(map);
+});
+
+
+
+// Older Syntax Notes below
 
 // Put the GeoJSON data on the map using the pointToLayer function
 // L.geoJSON(sanFranAirport, {
@@ -44,9 +42,9 @@ let sanFranAirport =
 // }).addTo(map);
 
 // Put the GeoJSON data on the map using the onEachFeature function
-L.geoJSON(sanFranAirport, {
-    onEachFeature : function(feature, layer) {
-        console.log(layer);
-        layer.bindPopup(feature.properties.name);
-    }
-}).addTo(map);
+// L.geoJSON(sanFranAirport, {
+//     onEachFeature : function(feature, layer) {
+//         console.log(layer);
+//         layer.bindPopup(feature.properties.name);
+//     }
+// }).addTo(map);
