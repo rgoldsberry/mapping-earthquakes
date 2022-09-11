@@ -34,7 +34,7 @@ let map = L.map('mapid', {
 L.control.layers(baseMaps).addTo(map);
 
 // getting neighborhood geoJSON data 
-let torontoHoods = "https://raw.githubusercontent.com/rgoldsberry/mapping-earthquakes/Mapping_GeoJSON_Polygons/torontoNeighborhoods.json"
+let torontoHoods = "https://raw.githubusercontent.com/rgoldsberry/mapping-earthquakes/main/torontoNeighborhoods.json"
 
 // setting polygon styles
 let myStyle = {
